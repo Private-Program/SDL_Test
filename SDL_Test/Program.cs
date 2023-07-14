@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using SDL_Test.DBContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var provider = builder.Services.BuildServiceProvider();
+var configuration = provider.GetRequiredService<IConfiguration>();
+builder.Services.AddDbContext<SalesDBContext>(item => item.UseSqlServer(configuration.GetConnectionString("SDL_Test_Connection")));
+
+
 
 var app = builder.Build();
 
